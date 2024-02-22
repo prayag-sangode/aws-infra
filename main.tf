@@ -18,6 +18,15 @@ resource "aws_instance" "example" {
   instance_type = "t2.micro"
 }
 
+resource "random_id" "bucket_suffix" {
+  byte_length = 4
+}
+
+resource "aws_s3_bucket" "my_bucket" {
+  bucket = "my-unique-bucket-${random_id.bucket_suffix.hex}"
+}
+
+
 output "instance_public_ip" {
   value = aws_instance.example.public_ip
 }
